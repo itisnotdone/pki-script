@@ -427,26 +427,26 @@ function site {
       # signing ca operations
       openssl rand \
         -base64 48 \
-        > $site_dir/pp.txt
+        > $site_dir/"$SITE_CN"_pp.txt
 
       openssl req \
         -new \
-        -passout file:$site_dir/pp.txt \
-        -keyout $site_dir/cert.key \
+        -passout file:$site_dir/"$SITE_CN"_pp.txt \
+        -keyout $site_dir/$SITE_CN.key \
         -config $conf_dir/site.conf \
-        -out $site_dir/cert.csr
+        -out $site_dir/$SITE_CN.csr
 
       openssl rsa \
-        -passin file:$site_dir/pp.txt \
-        -in $site_dir/cert.key \
-        -out $site_dir/cert_decrypted.key
+        -passin file:$site_dir/"$SITE_CN"_pp.txt \
+        -in $site_dir/$SITE_CN.key \
+        -out $site_dir/"$SITE_CN"_decrypted.key
 
       openssl ca \
         -config $conf_dir/signing_ca.conf \
         -batch \
         -passin file:$signing_ca_dir/pp/ca_passphrase.txt \
-        -in $site_dir/cert.csr \
-        -out $site_dir/cert.crt \
+        -in $site_dir/$SITE_CN.csr \
+        -out $site_dir/$SITE_CN.crt \
         -extensions server_ext
 
       # to generate a crl for the new ca
@@ -474,10 +474,10 @@ function site {
       tar zcvf $signing_ca_dir/archive/"$(basename $site_dir)"_"$serial_number".tar.gz \
         -C $site_dir \
         ca-bundle.crt \
-        pp.txt \
-        cert.key \
-        cert_decrypted.key \
-        cert.crt
+        "$SITE_CN"_pp.txt \
+        $SITE_CN.key \
+        "$SITE_CN"_decrypted.key \
+        $SITE_CN.crt
 
       cp -v $conf_dir/profile_ca $site_dir/
       cp -v $conf_dir/profile_site $site_dir/
@@ -490,11 +490,11 @@ function site {
         profile_ca \
         profile_site \
         signing_ca.conf \
-        pp.txt \
-        cert.csr \
-        cert.key \
-        cert_decrypted.key \
-        cert.crt
+        "$SITE_CN"_pp.txt \
+        $SITE_CN.key \
+        "$SITE_CN"_decrypted.key \
+        $SITE_CN.crt
+        $SITE_CN.csr \
 
       echo "Deploy to site_dir"
 
