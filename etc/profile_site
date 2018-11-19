@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# This site is used as default site
+# providing a HTTP service, pki.origin.don
+
+export SITE_C="US"
+export SITE_O="Excellent"
+export SITE_OU="Excellent"
+export SITE_CN="origin.don"
+
+export SAN="\
+  DNS:$SITE_CN,\
+  DNS:*.$SITE_CN,\
+  DNS:$SITE_CN,\
+  DNS:*.dev-$SITE_CN,\
+  DNS:dev-$SITE_CN,\
+  DNS:*.stg-$SITE_CN,\
+  DNS:stg-$SITE_CN"
+
+# If you want to create a new site certificate,
+# please create a new profile with this prefix,
+# 'profile_site_' so it can be recognized by
+# revoke function, i.e. 'profile_site_argn.don'

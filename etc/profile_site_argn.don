@@ -1,0 +1,15 @@
+#!/bin/bash
+
+export SITE_C="US"
+export SITE_O="Excellent"
+export SITE_OU="Excellent"
+export SITE_CN="argn.don"
+
+export SAN="\
+  DNS:$SITE_CN,\
+  DNS:*.$SITE_CN,\
+  DNS:$SITE_CN,\
+  DNS:*.dev-$SITE_CN,\
+  DNS:dev-$SITE_CN,\
+  DNS:*.stg-$SITE_CN,\
+  DNS:stg-$SITE_CN"

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+export PKI_SERVICE_DOMAIN="pki.origin.don"
+
+# Root CA DN
+export ROOT_CA_C="US"
+export ROOT_CA_O="Excellent"
+export ROOT_CA_OU="Internal PKI"
+export ROOT_CA_CN="Excellent Root CA"
+
+# Intermediate CA DN
+export SIGNING_CA_C="US"
+export SIGNING_CA_O="Excellent"
+export SIGNING_CA_OU="Internal PKI"
+export SIGNING_CA_CN="Excellent Signing CA"
