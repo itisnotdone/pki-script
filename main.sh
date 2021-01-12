@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# bash -x main.sh root_ca
-# bash -x main.sh signing_ca
-# bash -x main.sh cert
-
 conf_dir=etc
 
 if [ -f $conf_dir/profile_site ]; then
@@ -413,7 +409,7 @@ function site {
 
   for FILE in `find pki/sites -maxdepth 1 -type l -print`
   do
-    if [[ $(basename $FILE) == $SITE_CN ]]
+    if [[ $(basename $FILE) == $SITE_CN.tar.gz ]]
     then
       echo "The certificate for the site '$SITE_CN' has been issued already."
       exit 1
@@ -493,8 +489,8 @@ function site {
         "$SITE_CN"_pp.txt \
         $SITE_CN.key \
         "$SITE_CN"_decrypted.key \
-        $SITE_CN.crt
-        $SITE_CN.csr \
+        $SITE_CN.crt \
+        $SITE_CN.csr
 
       echo "Deploy to site_dir"
 
@@ -781,5 +777,5 @@ function quick_start {
   echo "#########################################################"
 }
 
-$1 $2 $3
+$@
 
